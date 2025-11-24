@@ -4,7 +4,9 @@ Ironman 70.3 training repo
 # To Do
 
 ### ELT
-- [ ] Review extract script to send less requests
+- [ ] Extract:
+    - [ ] Check payload for one activity
+    - [ ] Add a cooldown or a limit to avoid reaching daily limit too fast
 - [ ] Load into duckDB
 - [ ] Transform with dbt
 
