@@ -1,2 +1,2 @@
 # road_to_70_3
-Training performance repo
+Ironman 70.3 training repo
