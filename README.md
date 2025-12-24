@@ -4,10 +4,10 @@ Ironman 70.3 training repo
 # To Do
 
 ### ELT
-- [ ] Extract:
-    - [ ] Check payload for one activity
+- [x] Extract:
+    - [x] Check payload for one activity
     - [ ] Add a cooldown or a limit to avoid reaching daily limit too fast
-- [ ] Load into duckDB
+- [x] Load into duckDB
 - [ ] Transform with dbt
 
 ### Orchestration
