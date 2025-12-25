@@ -1,12 +1,19 @@
 import requests
 import json
 import duckdb
+import csv
+from datetime import datetime
+import os
+from dotenv import load_dotenv
 
-# Replace these with your Strava API credentials
-CLIENT_ID = '186926'
-CLIENT_SECRET = '79fbb5fb15243ed9259ffd5a8ad62f6d3bc5173e'
-REFRESH_TOKEN = 'd2563983165e6d93d156dff07f40a366de8756b2'  # Optional, if you want to refresh the token
-PER_PAGE = 50
+# Load environment variables from .env file
+load_dotenv()
+
+# to be stored in the .env file
+CLIENT_ID = os.getenv('STRAVA_CLIENT_ID')
+CLIENT_SECRET = os.getenv('STRAVA_CLIENT_SECRET')
+REFRESH_TOKEN = os.getenv('STRAVA_REFRESH_TOKEN')
+PER_PAGE = 200
 
 # Step 1: Get the access token
 def get_access_token(client_id, client_secret, refresh_token=None):
@@ -57,7 +64,8 @@ def store_in_duckdb(activities):
         average_speed FLOAT,
         max_speed FLOAT,
         average_heartrate FLOAT,
-        max_heartrate FLOAT
+        max_heartrate FLOAT,
+        ingestion_at_ts TIMESTAMP
     )
     """)
 
@@ -65,7 +73,7 @@ def store_in_duckdb(activities):
     for activity in activities:
         conn.execute("""
         INSERT INTO strava_activities VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_localtimestamp()
         )
         """, (
             activity.get('id'),
@@ -83,21 +91,29 @@ def store_in_duckdb(activities):
         ))
 
     # Print the table
-    print("Data stored in DuckDB:")
-    result = conn.execute("SELECT * FROM strava_activities").fetchall()
-    for row in result:
-        print(row)
-
+    print(f"{len(activities)} activities stored in DuckDB")
+    
     # Close the connection
     conn.close()
+    
+# Step 4: Store activities in a csv file for debugging with the name files contains the timestamp of the ingestion
+def store_in_csv(activities):
+    with open(f'activities_{datetime.now().strftime("%Y%m%d%H%M%S")}.csv', 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(activities[0].keys())
+        for activity in activities:
+            writer.writerow(activity.values())
 
-# Example usage
 if __name__ == "__main__":
     # Get access token
     access_token = get_access_token(CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN)
 
     # Fetch activities
     activities = fetch_activities(access_token, PER_PAGE)
+    
+    # Store activities in a csv file for debugging
+    store_in_csv(activities)
+
 
     # Store in DuckDB
     store_in_duckdb(activities)
