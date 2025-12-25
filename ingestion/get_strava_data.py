@@ -5,7 +5,7 @@ import csv
 from datetime import datetime
 import os
 from dotenv import load_dotenv
-
+import time
 # Load environment variables from .env file
 load_dotenv()
 
@@ -14,6 +14,8 @@ CLIENT_ID = os.getenv('STRAVA_CLIENT_ID')
 CLIENT_SECRET = os.getenv('STRAVA_CLIENT_SECRET')
 REFRESH_TOKEN = os.getenv('STRAVA_REFRESH_TOKEN')
 PER_PAGE = 200
+
+# Add decorator
 
 # Step 1: Get the access token
 def get_access_token(client_id, client_secret, refresh_token=None):
@@ -48,7 +50,7 @@ def fetch_activities(access_token, per_page=10):
 # Step 3: Store data in DuckDB
 def store_in_duckdb(activities):
     # Connect to DuckDB (in-memory or file)
-    conn = duckdb.connect(database='strava_data.duckdb')
+    conn = duckdb.connect(database='data/strava_data.duckdb')
 
     # Create a table
     conn.execute("""
