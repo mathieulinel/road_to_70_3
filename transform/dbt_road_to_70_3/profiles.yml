@@ -2,12 +2,7 @@ dbt_road_to_70_3:
   outputs:
     dev:
       type: duckdb
-      path: data/strava_data.duckdb
+      path: /Users/mathieulinel/Documents/perso/Road to 70_3/road_to_70_3/data/strava_data.duckdb
       threads: 1
-
-    prod:
-      type: duckdb
-      path: data/strava_data.duckdb
-      threads: 4
 
   target: dev
