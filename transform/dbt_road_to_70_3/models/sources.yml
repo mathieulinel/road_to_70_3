@@ -1,7 +1,6 @@
 version: 2
 sources:
-  - name: strava_data
+  - name: strava_raw
+    schema: raw
     tables:
       - name: strava_activities
-        config:
-          external_location: "/Users/mathieulinel/Documents/perso/Road to 70_3/road_to_70_3/data/strava_data.duckdb"

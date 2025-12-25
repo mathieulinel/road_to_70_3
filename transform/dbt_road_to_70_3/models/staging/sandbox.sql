@@ -1,2 +1,2 @@
 select *
-from {{ source('strava_data', 'strava_activities') }}
+from {{ source('strava_raw', 'strava_activities') }}

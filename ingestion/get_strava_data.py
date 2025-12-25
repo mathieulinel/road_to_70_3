@@ -52,9 +52,15 @@ def store_in_duckdb(activities):
     # Connect to DuckDB (in-memory or file)
     conn = duckdb.connect(database='data/strava_data.duckdb')
 
-    # Create a table
+    # Create a schema
     conn.execute("""
-    CREATE TABLE IF NOT EXISTS strava_activities (
+    CREATE OR REPLACE SCHEMA raw;
+    """)
+
+    # Create a table.
+    # Keep history with CREATE TABLE IF NOT EXISTS?
+    conn.execute("""
+    CREATE OR REPLACE TABLE raw.strava_activities ( 
         id BIGINT,
         name VARCHAR,
         distance FLOAT,
@@ -74,7 +80,7 @@ def store_in_duckdb(activities):
     # Insert data
     for activity in activities:
         conn.execute("""
-        INSERT INTO strava_activities VALUES (
+        INSERT INTO raw.strava_activities VALUES (
             ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_localtimestamp()
         )
         """, (
