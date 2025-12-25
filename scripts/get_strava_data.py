@@ -98,7 +98,7 @@ def store_in_duckdb(activities):
     
 # Step 4: Store activities in a csv file for debugging with the name files contains the timestamp of the ingestion
 def store_in_csv(activities):
-    with open(f'activities_{datetime.now().strftime("%Y%m%d%H%M%S")}.csv', 'w') as f:
+    with open(f'data/raw/activities_{datetime.now().strftime("%Y%m%d%H%M%S")}.csv', 'w') as f:
         writer = csv.writer(f)
         writer.writerow(activities[0].keys())
         for activity in activities:
