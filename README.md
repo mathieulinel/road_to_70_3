@@ -3,16 +3,11 @@ Ironman 70.3 training repo
 
 # To Do
 
-### ELT
-- [x] Extract:
-    - [x] Check payload for one activity
-    - [ ] Add a cooldown or a limit to avoid reaching daily limit too fast
-- [x] Load into duckDB
-- [ ] Transform with dbt
-
 ### Orchestration
 - [ ] Create dag to execute in Dagster
 
+# Reporting
+[Evidence dashboard](https://www.evidence.studio/roadto703/home/edit)
 
 # Project structure
 road_to_70_3/
