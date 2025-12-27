@@ -4,3 +4,10 @@ sources:
     schema: raw
     tables:
       - name: strava_activities
+        description: "Strava activities data"
+        columns:
+        - name: id
+          description: "Activity ID"
+          tests:
+            - unique
+            - not_null
