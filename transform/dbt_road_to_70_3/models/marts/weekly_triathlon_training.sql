@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized='external',
+        location="~/Documents/perso/Road to 70_3/road_to_70_3/data/exports/weekly_triathlon_training.csv"
+    )
+}}
+
 select 
     date_trunc('week', activity_start_date) as week_start_date,
     activity_type,
