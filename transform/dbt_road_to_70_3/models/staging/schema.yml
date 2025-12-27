@@ -2,11 +2,11 @@
 version: 2
 
 models:
-  - name: sandbox
-    # description: "Sandbox for testing"
-    # columns:
-    #   - name: *
-    #     description: "All columns"
-    #     data_tests:
-    #       - unique
-    #       - not_null
+  - name: stg__strava_activities
+    description: "Transformations for Strava activities data"
+    columns:
+      - name: id
+        description: "Activity ID"
+        data_tests:
+          - unique
+          - not_null
